@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.kotlin)
   alias(libs.plugins.ksp)
   alias(libs.plugins.hilt)
+  alias(libs.plugins.googleServices)
 }
 
 android {
@@ -11,7 +12,7 @@ android {
 
   defaultConfig {
     applicationId = "com.openclassrooms.hexagonal.games"
-    minSdk = 24
+    minSdk = 26
     targetSdk = 34
     versionCode = 1
     versionName = "1.0"
@@ -59,6 +60,9 @@ dependencies {
   implementation(libs.lifecycle.runtime.compose)
   debugImplementation(libs.compose.ui.tooling)
   debugImplementation(libs.compose.ui.test.manifest)
+
+  // firebase
+  implementation(platform(libs.firebase.bom))
 
   implementation(libs.activity.compose)
   implementation(libs.navigation.compose)
