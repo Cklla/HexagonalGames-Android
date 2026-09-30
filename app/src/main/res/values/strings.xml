@@ -15,4 +15,7 @@
   <string name="contentDescription_notification_icon">Icone de notification</string>
   <string name="error_title">Title not valid</string>
   <string name="action_account">My account</string>
+  <string name="action_sign_out">Sign out</string>
+  <string name="action_delete_account">Delete account</string>
+  <string name="error_unknown">An unknown error occurred.</string>
 </resources>

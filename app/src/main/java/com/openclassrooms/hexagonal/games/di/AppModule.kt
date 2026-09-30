@@ -2,6 +2,7 @@ package com.openclassrooms.hexagonal.games.di
 
 import com.openclassrooms.hexagonal.games.data.service.PostApi
 import com.openclassrooms.hexagonal.games.data.service.PostFakeApi
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +28,14 @@ class AppModule {
   @Singleton
   fun providePostApi(): PostApi {
     return PostFakeApi()
+  }
+  
+  /**
+   * Provides the Firebase Authentication entry point, shared by the whole application.
+   */
+  @Provides
+  @Singleton
+  fun provideFirebaseAuth(): FirebaseAuth {
+    return FirebaseAuth.getInstance()
   }
 }

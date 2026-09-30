@@ -75,6 +75,7 @@ dependencies {
   implementation(libs.accompanist.permissions)
 
   testImplementation(libs.junit)
+  testImplementation(libs.mockk)
   androidTestImplementation(libs.ext.junit)
   androidTestImplementation(libs.espresso.core)
 }

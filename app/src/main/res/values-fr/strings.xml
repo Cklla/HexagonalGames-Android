@@ -15,4 +15,7 @@
   <string name="contentDescription_notification_icon">Notification icon</string>
   <string name="error_title">Titre non valide</string>
   <string name="action_account">Mon compte</string>
+  <string name="action_sign_out">Déconnexion</string>
+  <string name="action_delete_account">Suppression du compte</string>
+  <string name="error_unknown">Une erreur inconnue s\'est produite.</string>
 </resources>
