@@ -1,6 +1,7 @@
 plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.kotlin)
+  alias(libs.plugins.composeCompiler)
   alias(libs.plugins.ksp)
   alias(libs.plugins.hilt)
   alias(libs.plugins.googleServices)
@@ -30,14 +31,14 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
-  composeOptions {
-    kotlinCompilerExtensionVersion = "1.5.11"
-  }
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
   buildFeatures {
     compose = true
+  }
+}
+
+kotlin {
+  compilerOptions {
+    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
   }
 }
 

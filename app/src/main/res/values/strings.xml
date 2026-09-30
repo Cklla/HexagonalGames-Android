@@ -14,4 +14,5 @@
   <string name="contentDescription_more">More</string>
   <string name="contentDescription_notification_icon">Icone de notification</string>
   <string name="error_title">Title not valid</string>
+  <string name="action_account">My account</string>
 </resources>
