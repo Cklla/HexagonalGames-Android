@@ -65,6 +65,7 @@ dependencies {
   // firebase
   implementation(platform(libs.firebase.bom))
   implementation(libs.firebase.ui.auth)
+  implementation(libs.firebase.messaging)
 
   implementation(libs.activity.compose)
   implementation(libs.navigation.compose)
