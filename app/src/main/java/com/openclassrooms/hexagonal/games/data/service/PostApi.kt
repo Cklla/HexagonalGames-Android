@@ -20,6 +20,7 @@ interface PostApi {
    * Adds a new Post to the data source.
    *
    * @param post The Post object to be added.
+   * @throws Exception if the post could not be persisted.
    */
-  fun addPost(post: Post)
+  suspend fun addPost(post: Post)
 }

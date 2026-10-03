@@ -27,9 +27,10 @@ class PostRepository @Inject constructor(private val postApi: PostApi) {
    * Adds a new Post to the data source using the injected PostApi.
    *
    * @param post The Post object to be added.
+   * @throws Exception if the post could not be persisted.
    */
-  fun addPost(post: Post?) {
-    postApi.addPost(post!!)
+  suspend fun addPost(post: Post) {
+    postApi.addPost(post)
   }
   
 }

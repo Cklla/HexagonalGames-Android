@@ -18,4 +18,7 @@
   <string name="action_sign_out">Sign out</string>
   <string name="action_delete_account">Delete account</string>
   <string name="error_unknown">An unknown error occurred.</string>
+  <string name="error_description">Invalid description</string>
+  <string name="error_no_network">No network</string>
+  <string name="error_generic">An issue occured</string>
 </resources>

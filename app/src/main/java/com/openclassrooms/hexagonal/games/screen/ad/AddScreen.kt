@@ -1,5 +1,6 @@
 package com.openclassrooms.hexagonal.games.screen.ad
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,9 +20,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -40,6 +43,21 @@ fun AddScreen(
   onBackClick: () -> Unit,
   onSaveClick: () -> Unit
 ) {
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val context = LocalContext.current
+  
+  LaunchedEffect(uiState.isSaved) {
+    if (uiState.isSaved) {
+      onSaveClick()
+    }
+  }
+  LaunchedEffect(uiState.messageRes) {
+    uiState.messageRes?.let {
+      Toast.makeText(context, context.getString(it), Toast.LENGTH_LONG).show()
+      viewModel.onMessageShown()
+    }
+  }
+  
   Scaffold(
     modifier = modifier,
     topBar = {
@@ -66,14 +84,12 @@ fun AddScreen(
     CreatePost(
       modifier = Modifier.padding(contentPadding),
       error = error,
+      isSaving = uiState.isSaving,
       title = post.title,
       onTitleChanged = { viewModel.onAction(FormEvent.TitleChanged(it)) },
       description = post.description ?: "",
       onDescriptionChanged = { viewModel.onAction(FormEvent.DescriptionChanged(it)) },
-      onSaveClicked = {
-        viewModel.addPost()
-        onSaveClick()
-      }
+      onSaveClicked = { viewModel.addPost() }
     )
   }
 }
@@ -86,7 +102,8 @@ private fun CreatePost(
   description: String,
   onDescriptionChanged: (String) -> Unit,
   onSaveClicked: () -> Unit,
-  error: FormError?
+  error: FormError?,
+  isSaving: Boolean = false
 ) {
   val scrollState = rememberScrollState()
   
@@ -124,13 +141,20 @@ private fun CreatePost(
           .padding(top = 16.dp)
           .fillMaxWidth(),
         value = description,
+        isError = error is FormError.DescriptionError,
         onValueChange = { onDescriptionChanged(it) },
         label = { Text(stringResource(id = R.string.hint_description)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
       )
+      if (error is FormError.DescriptionError) {
+        Text(
+          text = stringResource(id = error.messageRes),
+          color = MaterialTheme.colorScheme.error,
+        )
+      }
     }
     Button(
-      enabled = error == null,
+      enabled = error == null && !isSaving,
       onClick = { onSaveClicked() }
     ) {
       Text(
