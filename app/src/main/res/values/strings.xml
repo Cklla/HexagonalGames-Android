@@ -21,4 +21,6 @@
   <string name="error_description">Invalid description</string>
   <string name="error_no_network">No network</string>
   <string name="error_generic">An issue occured</string>
+  <string name="no_posts">No posts</string>
+  <string name="error_account_required_post">An account is mandatory in order to add a post</string>
 </resources>

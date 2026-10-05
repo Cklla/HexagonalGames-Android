@@ -21,4 +21,6 @@
   <string name="error_description">Description non valide</string>
   <string name="error_no_network">Pas de réseau</string>
   <string name="error_generic">Une erreur est survenue</string>
+  <string name="no_posts">Aucune publication</string>
+  <string name="error_account_required_post">Un compte est nécessaire pour ajouter une publication</string>
 </resources>

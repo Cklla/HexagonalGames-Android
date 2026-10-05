@@ -1,5 +1,6 @@
 package com.openclassrooms.hexagonal.games.screen.homefeed
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -24,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -58,6 +60,15 @@ fun HomefeedScreen(
   onFABClick: () -> Unit = {},
 ) {
   var showMenu by rememberSaveable { mutableStateOf(false) }
+  val context = LocalContext.current
+  val messageRes by viewModel.messageRes.collectAsStateWithLifecycle()
+  
+  LaunchedEffect(messageRes) {
+    messageRes?.let {
+      Toast.makeText(context, context.getString(it), Toast.LENGTH_LONG).show()
+      viewModel.onMessageShown()
+    }
+  }
   
   Scaffold(
     modifier = modifier,
@@ -79,12 +90,23 @@ fun HomefeedScreen(
           ) {
             DropdownMenuItem(
               onClick = {
+                showMenu = false
                 onSettingsClick()
-                onAccountClick()
               },
               text = {
                 Text(
                   text = stringResource(id = R.string.action_settings)
+                )
+              }
+            )
+            DropdownMenuItem(
+              onClick = {
+                showMenu = false
+                onAccountClick()
+              },
+              text = {
+                Text(
+                  text = stringResource(id = R.string.action_account)
                 )
               }
             )
@@ -96,7 +118,9 @@ fun HomefeedScreen(
     floatingActionButton = {
       FloatingActionButton(
         onClick = {
-          onFABClick()
+          if (viewModel.onAddPostClick()) {
+            onFABClick()
+          }
         }
       ) {
         Icon(
