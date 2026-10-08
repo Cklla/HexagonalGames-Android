@@ -60,6 +60,33 @@ class FirestoreCommentApi(private val firestore: FirebaseFirestore) : CommentApi
   }
 
   /**
+   * Writes the comment in the `comments` sub-collection of the post and suspends until the server
+   * has acknowledged it.
+   *
+   * @throws Exception if the write fails (e.g. permission denied).
+   */
+  override suspend fun addComment(postId: String, comment: Comment) {
+    firestore.collection(POSTS_COLLECTION)
+      .document(postId)
+      .collection(COMMENTS_COLLECTION)
+      .document(comment.id)
+      .set(comment.toFirestoreMap())
+      .await()
+  }
+  
+  private fun Comment.toFirestoreMap(): Map<String, Any?> = mapOf(
+    FIELD_CONTENT to content,
+    FIELD_TIMESTAMP to timestamp,
+    FIELD_AUTHOR to author?.let {
+      mapOf(
+        FIELD_AUTHOR_ID to it.id,
+        FIELD_AUTHOR_FIRSTNAME to it.firstname,
+        FIELD_AUTHOR_LASTNAME to it.lastname
+      )
+    }
+  )
+  
+  /**
    * Maps a Firestore document to a Comment. FirebaseUI requires a non-null result, so missing
    * fields fall back to empty values instead of dropping the document.
    */

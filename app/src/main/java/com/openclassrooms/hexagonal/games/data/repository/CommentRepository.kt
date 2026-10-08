@@ -22,5 +22,16 @@ class CommentRepository @Inject constructor(private val commentApi: CommentApi) 
    */
   fun getComments(postId: String): Flow<List<Comment>> =
     commentApi.getCommentsOrderByCreationDateAsc(postId)
-
+  
+  /**
+   * Adds a new Comment to a Post using the injected CommentApi.
+   *
+   * @param postId The ID of the Post the comment belongs to.
+   * @param comment The Comment object to be added.
+   * @throws Exception if the comment could not be persisted.
+   */
+  suspend fun addComment(postId: String, comment: Comment) {
+    commentApi.addComment(postId, comment)
+  }
+  
 }

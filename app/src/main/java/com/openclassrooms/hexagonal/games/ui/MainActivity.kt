@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.openclassrooms.hexagonal.games.screen.Screen
 import com.openclassrooms.hexagonal.games.screen.account.AccountScreen
 import com.openclassrooms.hexagonal.games.screen.ad.AddScreen
+import com.openclassrooms.hexagonal.games.screen.comment.AddCommentScreen
 import com.openclassrooms.hexagonal.games.screen.detail.PostDetailScreen
 import com.openclassrooms.hexagonal.games.screen.homefeed.HomefeedScreen
 import com.openclassrooms.hexagonal.games.screen.settings.SettingsScreen
@@ -84,12 +85,23 @@ fun HexagonalGamesNavHost(navHostController: NavHostController) {
     composable(
       route = Screen.PostDetail.route,
       arguments = Screen.PostDetail.navArguments
-    ) {
+    ) { backStackEntry ->
+      val postId = backStackEntry.arguments?.getString(Screen.PostDetail.ARG_POST_ID).orEmpty()
       PostDetailScreen(
         onBackClick = { navHostController.navigateUp() },
         onFABClick = {
-          // TODO card 14: navigate to the "add a comment" screen
+          navHostController.navigate(Screen.AddComment.createRoute(postId))
         }
+      )
+    }
+    composable(
+      route = Screen.AddComment.route,
+      arguments = Screen.AddComment.navArguments
+    ) {
+      // Saving pops back to the post detail screen, which sits right below on the back stack
+      AddCommentScreen(
+        onBackClick = { navHostController.navigateUp() },
+        onSaveClick = { navHostController.navigateUp() }
       )
     }
     composable(route = Screen.AddPost.route) {

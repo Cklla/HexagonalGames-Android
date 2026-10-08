@@ -30,4 +30,16 @@ sealed class Screen(
      */
     fun createRoute(postId: String) = "postDetail/${Uri.encode(postId)}"
   }
+
+  data object AddComment : Screen(
+    route = "addComment/{$POST_ID_ARG}",
+    navArguments = listOf(navArgument(POST_ID_ARG) { type = NavType.StringType })
+  ) {
+    const val ARG_POST_ID = POST_ID_ARG
+
+    /**
+     * Builds the concrete route to add a comment to the given post.
+     */
+    fun createRoute(postId: String) = "addComment/${Uri.encode(postId)}"
+  }
 }

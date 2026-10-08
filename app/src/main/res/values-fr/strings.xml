@@ -24,4 +24,7 @@
   <string name="no_posts">Aucune publication</string>
   <string name="error_account_required_post">Un compte est nécessaire pour ajouter une publication</string>
   <string name="error_account_required_comment">Un compte est nécessaire pour ajouter un commentaire</string>
+  <string name="add_comment_label">Ajout d\'un commentaire</string>
+  <string name="hint_comment">Commentaire</string>
+  <string name="error_comment">Commentaire non valide</string>
 </resources>
