@@ -24,6 +24,14 @@ class PostRepository @Inject constructor(private val postApi: PostApi) {
   val posts: Flow<List<Post>> = postApi.getPostsOrderByCreationDateDesc()
   
   /**
+   * Retrieves a single Post, kept up to date in real time.
+   *
+   * @param postId The ID of the Post to retrieve.
+   * @return Flow emitting the Post each time it changes, or null if it does not exist.
+   */
+  fun getPost(postId: String): Flow<Post?> = postApi.getPost(postId)
+
+  /**
    * Adds a new Post to the data source using the injected PostApi.
    *
    * @param post The Post object to be added.

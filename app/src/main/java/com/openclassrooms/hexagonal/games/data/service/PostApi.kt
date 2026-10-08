@@ -17,6 +17,14 @@ interface PostApi {
   fun getPostsOrderByCreationDateDesc(): Flow<List<Post>>
   
   /**
+   * Retrieves a single Post and keeps it up to date.
+   *
+   * @param postId The ID of the Post to retrieve.
+   * @return A Flow emitting the Post each time it changes, or null if it does not exist (anymore).
+   */
+  fun getPost(postId: String): Flow<Post?>
+
+  /**
    * Adds a new Post to the data source.
    *
    * @param post The Post object to be added.

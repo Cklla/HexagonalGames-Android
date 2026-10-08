@@ -1,5 +1,7 @@
 package com.openclassrooms.hexagonal.games.di
 
+import com.openclassrooms.hexagonal.games.data.service.CommentApi
+import com.openclassrooms.hexagonal.games.data.service.FirestoreCommentApi
 import com.openclassrooms.hexagonal.games.data.service.PostApi
 import com.openclassrooms.hexagonal.games.data.service.FirestorePostApi
 import com.openclassrooms.hexagonal.games.data.network.AndroidNetworkChecker
@@ -31,6 +33,17 @@ class AppModule {
     return FirestorePostApi(firestore)
   }
   
+  /**
+   * Provides a Singleton instance of CommentApi backed by FirebaseUI Firestore.
+   *
+   * @return A Singleton instance of FirestoreCommentApi.
+   */
+  @Provides
+  @Singleton
+  fun provideCommentApi(firestore: FirebaseFirestore): CommentApi {
+    return FirestoreCommentApi(firestore)
+  }
+
   /**
    * Provides the Cloud Firestore entry point, shared by the whole application.
    */

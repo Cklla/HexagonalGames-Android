@@ -33,6 +33,22 @@ class FirestorePostApi(private val firestore: FirebaseFirestore) : PostApi {
   }
   
   /**
+   * Listens to a single post document. Emits null if the document does not exist or is malformed.
+   */
+  override fun getPost(postId: String): Flow<Post?> = callbackFlow {
+    val registration = firestore.collection(POSTS_COLLECTION)
+      .document(postId)
+      .addSnapshotListener { snapshot, error ->
+        if (error != null) {
+          close(error)
+          return@addSnapshotListener
+        }
+        trySend(snapshot?.toPost())
+      }
+    awaitClose { registration.remove() }
+  }
+
+  /**
    * Writes the post in Firestore and suspends until the server has acknowledged it.
    *
    * @throws Exception if the write fails (e.g. permission denied).

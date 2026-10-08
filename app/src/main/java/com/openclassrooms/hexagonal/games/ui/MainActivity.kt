@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.openclassrooms.hexagonal.games.screen.Screen
 import com.openclassrooms.hexagonal.games.screen.account.AccountScreen
 import com.openclassrooms.hexagonal.games.screen.ad.AddScreen
+import com.openclassrooms.hexagonal.games.screen.detail.PostDetailScreen
 import com.openclassrooms.hexagonal.games.screen.homefeed.HomefeedScreen
 import com.openclassrooms.hexagonal.games.screen.settings.SettingsScreen
 import com.openclassrooms.hexagonal.games.ui.theme.HexagonalGamesTheme
@@ -58,8 +59,8 @@ fun HexagonalGamesNavHost(navHostController: NavHostController) {
         }
       }
       HomefeedScreen(
-        onPostClick = {
-          //TODO
+        onPostClick = { post ->
+          navHostController.navigate(Screen.PostDetail.createRoute(post.id))
         },
         onSettingsClick = {
           navHostController.navigate(Screen.Settings.route)
@@ -77,6 +78,17 @@ fun HexagonalGamesNavHost(navHostController: NavHostController) {
           } else {
             navHostController.navigate(Screen.Account.route)
           }
+        }
+      )
+    }
+    composable(
+      route = Screen.PostDetail.route,
+      arguments = Screen.PostDetail.navArguments
+    ) {
+      PostDetailScreen(
+        onBackClick = { navHostController.navigateUp() },
+        onFABClick = {
+          // TODO card 14: navigate to the "add a comment" screen
         }
       )
     }
