@@ -8,6 +8,7 @@ import com.openclassrooms.hexagonal.games.data.network.AndroidNetworkChecker
 import com.openclassrooms.hexagonal.games.data.network.NetworkChecker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -69,5 +70,14 @@ class AppModule {
   @Singleton
   fun provideFirebaseAuth(): FirebaseAuth {
     return FirebaseAuth.getInstance()
+  }
+  
+  /**
+   * Provides the Firebase Cloud Messaging entry point, shared by the whole application.
+   */
+  @Provides
+  @Singleton
+  fun provideFirebaseMessaging(): FirebaseMessaging {
+    return FirebaseMessaging.getInstance()
   }
 }
